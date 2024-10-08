@@ -1,0 +1,747 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.4.0 #14620 (Linux)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module main
+                                      6 	.optsdcc -mpdk14
+                                      7 	
+                                      8 
+                                      9 ; default segment ordering in RAM for linker
+                                     10 	.area DATA
+                                     11 	.area OSEG (OVR,DATA)
+                                     12 
+                                     13 ;--------------------------------------------------------
+                                     14 ; Public variables in this module
+                                     15 ;--------------------------------------------------------
+                                     16 	.globl _toggle_led_PARM_1
+                                     17 	.globl _lfsr_shift_PARM_1
+                                     18 	.globl _main
+                                     19 	.globl _handle_tick
+                                     20 	.globl _load_next_delay_target
+                                     21 	.globl _flash_led
+                                     22 	.globl _toggle_led
+                                     23 	.globl _lfsr_init
+                                     24 	.globl _lfsr_shift
+                                     25 	.globl _get_initial_psudo_rnd
+                                     26 	.globl _sys_init
+                                     27 	.globl __t16c
+                                     28 	.globl __rop
+                                     29 	.globl __ilrcr
+                                     30 	.globl __tm3b
+                                     31 	.globl __tm3s
+                                     32 	.globl __tm3ct
+                                     33 	.globl __tm3c
+                                     34 	.globl __lvdc
+                                     35 	.globl __tkcl
+                                     36 	.globl __tkch
+                                     37 	.globl __tps2
+                                     38 	.globl __tps
+                                     39 	.globl __tke1
+                                     40 	.globl __tke2
+                                     41 	.globl __tcc
+                                     42 	.globl __ts
+                                     43 	.globl __tm2b
+                                     44 	.globl __tm2s
+                                     45 	.globl __tm2ct
+                                     46 	.globl __tm2c
+                                     47 	.globl __misclvr
+                                     48 	.globl __bgtr
+                                     49 	.globl __gpcs
+                                     50 	.globl __gpcc
+                                     51 	.globl __pbpl
+                                     52 	.globl __pbph
+                                     53 	.globl __pbc
+                                     54 	.globl __pb
+                                     55 	.globl __papl
+                                     56 	.globl __paph
+                                     57 	.globl __pac
+                                     58 	.globl __pa
+                                     59 	.globl __misc2
+                                     60 	.globl __pbdier
+                                     61 	.globl __padier
+                                     62 	.globl __integs
+                                     63 	.globl __ihrcr
+                                     64 	.globl __eoscr
+                                     65 	.globl __misc
+                                     66 	.globl __t16m
+                                     67 	.globl __intrq
+                                     68 	.globl __inten
+                                     69 	.globl __clkmd
+                                     70 	.globl __sp
+                                     71 	.globl __flag
+                                     72 	.globl _load_next_delay_target_PARM_1
+                                     73 	.globl _flash_led_PARM_1
+                                     74 	.globl _rnd_regs
+                                     75 	.globl _leds
+                                     76 ;--------------------------------------------------------
+                                     77 ; special function registers
+                                     78 ;--------------------------------------------------------
+                                     79 	.area RSEG (ABS)
+      000000                         80 	.org 0x0000
+                           000000    81 __flag	=	0x0000
+                           000002    82 __sp	=	0x0002
+                           000003    83 __clkmd	=	0x0003
+                           000004    84 __inten	=	0x0004
+                           000005    85 __intrq	=	0x0005
+                           000006    86 __t16m	=	0x0006
+                           000008    87 __misc	=	0x0008
+                           00000A    88 __eoscr	=	0x000a
+                           00000B    89 __ihrcr	=	0x000b
+                           00000C    90 __integs	=	0x000c
+                           00000D    91 __padier	=	0x000d
+                           00000E    92 __pbdier	=	0x000e
+                           00000F    93 __misc2	=	0x000f
+                           000010    94 __pa	=	0x0010
+                           000011    95 __pac	=	0x0011
+                           000012    96 __paph	=	0x0012
+                           000013    97 __papl	=	0x0013
+                           000014    98 __pb	=	0x0014
+                           000015    99 __pbc	=	0x0015
+                           000016   100 __pbph	=	0x0016
+                           000017   101 __pbpl	=	0x0017
+                           000018   102 __gpcc	=	0x0018
+                           000019   103 __gpcs	=	0x0019
+                           00001A   104 __bgtr	=	0x001a
+                           00001B   105 __misclvr	=	0x001b
+                           00001C   106 __tm2c	=	0x001c
+                           00001D   107 __tm2ct	=	0x001d
+                           00001E   108 __tm2s	=	0x001e
+                           00001F   109 __tm2b	=	0x001f
+                           000020   110 __ts	=	0x0020
+                           000021   111 __tcc	=	0x0021
+                           000022   112 __tke2	=	0x0022
+                           000024   113 __tke1	=	0x0024
+                           000026   114 __tps	=	0x0026
+                           000028   115 __tps2	=	0x0028
+                           00002B   116 __tkch	=	0x002b
+                           00002C   117 __tkcl	=	0x002c
+                           00002D   118 __lvdc	=	0x002d
+                           000032   119 __tm3c	=	0x0032
+                           000033   120 __tm3ct	=	0x0033
+                           000034   121 __tm3s	=	0x0034
+                           000035   122 __tm3b	=	0x0035
+                           000039   123 __ilrcr	=	0x0039
+                           00003A   124 __rop	=	0x003a
+      000000                        125 __t16c::
+      000000                        126 	.ds 2
+                                    127 ;--------------------------------------------------------
+                                    128 ; ram data
+                                    129 ;--------------------------------------------------------
+                                    130 	.area DATA
+      000000                        131 _leds::
+      000000                        132 	.ds 10
+      00000A                        133 _rnd_regs::
+      00000A                        134 	.ds 4
+      00000E                        135 _lfsr_init_sloc9_1_0:
+      00000E                        136 	.ds 1
+      00000F                        137 _flash_led_PARM_1:
+      00000F                        138 	.ds 1
+      000010                        139 _flash_led_sloc12_1_0:
+      000010                        140 	.ds 1
+      000011                        141 _load_next_delay_target_PARM_1:
+      000011                        142 	.ds 1
+      000012                        143 _load_next_delay_target_sloc13_1_0:
+      000012                        144 	.ds 1
+      000013                        145 _load_next_delay_target_sloc14_1_0:
+      000013                        146 	.ds 1
+      000014                        147 _load_next_delay_target_sloc15_1_0:
+      000014                        148 	.ds 1
+      000015                        149 _load_next_delay_target_sloc16_1_0:
+      000015                        150 	.ds 1
+      000016                        151 _handle_tick_sloc17_1_0:
+      000016                        152 	.ds 1
+      000017                        153 _handle_tick_sloc18_1_0:
+      000017                        154 	.ds 1
+      000018                        155 _handle_tick_sloc19_1_0:
+      000018                        156 	.ds 1
+      000019                        157 _handle_tick_sloc20_1_0:
+      000019                        158 	.ds 1
+      00001A                        159 _main_sloc21_1_0:
+      00001A                        160 	.ds 2
+                                    161 ;--------------------------------------------------------
+                                    162 ; overlayable items in ram
+                                    163 ;--------------------------------------------------------
+                                    164 	.area	OSEG (OVR,DATA)
+      000000                        165 _get_initial_psudo_rnd_sloc0_1_0:
+      000000                        166 	.ds 1
+      000001                        167 _get_initial_psudo_rnd_sloc1_1_0:
+      000001                        168 	.ds 1
+      000002                        169 _get_initial_psudo_rnd_sloc2_1_0:
+      000002                        170 	.ds 1
+                                    171 	.area	OSEG (OVR,DATA)
+      000000                        172 _lfsr_shift_PARM_1:
+      000000                        173 	.ds 1
+      000001                        174 _lfsr_shift_sloc3_1_0:
+      000001                        175 	.ds 1
+      000002                        176 _lfsr_shift_sloc4_1_0:
+      000002                        177 	.ds 1
+      000003                        178 _lfsr_shift_sloc5_1_0:
+      000003                        179 	.ds 1
+      000004                        180 _lfsr_shift_sloc6_1_0:
+      000004                        181 	.ds 1
+      000005                        182 _lfsr_shift_sloc7_1_0:
+      000005                        183 	.ds 1
+      000006                        184 _lfsr_shift_sloc8_1_0:
+      000006                        185 	.ds 1
+                                    186 	.area	OSEG (OVR,DATA)
+      000000                        187 _toggle_led_PARM_1:
+      000000                        188 	.ds 1
+      000001                        189 _toggle_led_sloc10_1_0:
+      000001                        190 	.ds 1
+      000002                        191 _toggle_led_sloc11_1_0:
+      000002                        192 	.ds 1
+                                    193 ;--------------------------------------------------------
+                                    194 ; Stack segment in internal ram
+                                    195 ;--------------------------------------------------------
+                                    196 	.area SSEG
+      000000                        197 __start__stack:
+      000000                        198 	.ds	1
+                                    199 
+                                    200 ;--------------------------------------------------------
+                                    201 ; absolute external ram data
+                                    202 ;--------------------------------------------------------
+                                    203 	.area DABS (ABS)
+                                    204 ;--------------------------------------------------------
+                                    205 ; interrupt vector
+                                    206 ;--------------------------------------------------------
+                                    207 	.area HOME
+      000000                        208 __interrupt_vect:
+                                    209 	.area	HEADER (ABS)
+      000020                        210 	.org	 0x0020
+      000020 7B 00                  211 	reti
+                                    212 ;--------------------------------------------------------
+                                    213 ; global & static initialisations
+                                    214 ;--------------------------------------------------------
+                                    215 	.area HOME
+                                    216 	.area GSINIT
+                                    217 	.area GSFINAL
+                                    218 	.area GSINIT
+                                    219 	.area	PREG (ABS)
+      000000                        220 	.org 0x00
+      000000                        221 p::
+      000000                        222 	.ds 2
+                                    223 	.area	HEADER (ABS)
+      000000                        224 	.org 0x0000
+      000000 00 00                  225 	nop
+      000002r01r13                  226 	clear	p+1
+      000004r00r2F                  227 	mov	a, #s_OSEG
+      000006r01r28                  228 	add	a, #l_OSEG + 1
+      000008 FE 2C                  229 	and	a, #0xfe
+      00000A 82 01                  230 	mov.io	sp, a
+      00000Cr00r38                  231 	call	___sdcc_external_startup
+      00000E 00 2B                  232 	cneqsn	a, #0x00
+      000010r00r30                  233 	goto	__sdcc_init_data
+      000012r00r30                  234 	goto	__sdcc_program_startup
+                                    235 	.area GSINIT
+      000000                        236 __sdcc_init_data:
+      000000r00r2F                  237 	mov	a, #s_DATA
+      000002r80r0B                  238 	mov	p, a
+      000004r0Er30                  239 	goto	00002$
+      000006                        240 00001$:
+      000006 00 2F                  241 	mov	a, #0x00
+      000008r80r03                  242 	idxm	p, a
+      00000Ar00r12                  243 	inc	p
+      00000Cr00r2F                  244 	mov	a, #s_DATA
+      00000E                        245 00002$:
+      00000Er00r28                  246 	add	a, #l_DATA
+      000010r00r17                  247 	ceqsn	a, p
+      000012r06r30                  248 	goto	00001$
+                                    249 ;	main.c: 34: LED_REG leds[] = {
+      000014 04 2F                  250 	mov	a, #0x04
+      000016r80r0B                  251 	mov	_leds+0, a
+      000018 05 2F                  252 	mov	a, #0x05
+      00001Ar85r0B                  253 	mov	_leds+5, a
+      00001Cr01r13                  254 	clear	_leds+1
+      00001Er06r13                  255 	clear	_leds+6
+      000020 BB 2F                  256 	mov	a, #0xbb
+      000022r82r0B                  257 	mov	_leds+2, a
+      000024 AA 2F                  258 	mov	a, #0xaa
+      000026r87r0B                  259 	mov	_leds+7, a
+      000028r04r13                  260 	clear	_leds+4
+      00002Ar09r13                  261 	clear	_leds+9
+      00002C 01 2F                  262 	mov	a, #0x01
+      00002Er83r0B                  263 	mov	_leds+3, a
+      000030 01 2F                  264 	mov	a, #0x01
+      000032r88r0B                  265 	mov	_leds+8, a
+                                    266 	.area GSFINAL
+      000000r00r30                  267 	goto	__sdcc_program_startup
+                                    268 ;--------------------------------------------------------
+                                    269 ; Home
+                                    270 ;--------------------------------------------------------
+                                    271 	.area HOME
+                                    272 	.area HOME
+      000000                        273 __sdcc_program_startup:
+      000000r5Er32                  274 	goto	_main
+                                    275 ;	return from main will return to caller
+                                    276 ;--------------------------------------------------------
+                                    277 ; code
+                                    278 ;--------------------------------------------------------
+                                    279 	.area CODE
+                                    280 ;	main.c: 50: void sys_init()
+                                    281 ;	-----------------------------------------
+                                    282 ;	 function sys_init
+                                    283 ;	-----------------------------------------
+      000000                        284 _sys_init:
+                                    285 ;	main.c: 52: CLKMD &= ~(CLKMD_ENABLE_WATCHDOG);
+      000000 43 1C                  286 	set0.io	__clkmd, #1
+                                    287 ;	main.c: 53: CLKMD |= CLKMD_ENABLE_IHRC | CLKMD_IHRC_DIV2;
+      000002 C3 01                  288 	mov.io	a, __clkmd
+      000004 30 2D                  289 	or	a, #0x30
+      000006 83 01                  290 	mov.io	__clkmd, a
+                                    291 ;	main.c: 54: PAC |= LED_SHIFT(LED_BIT_0) | LED_SHIFT(LED_BIT_1);
+      000008 D1 01                  292 	mov.io	a, __pac
+      00000A 30 2D                  293 	or	a, #0x30
+      00000C 91 01                  294 	mov.io	__pac, a
+                                    295 ;	main.c: 55: LED_OFF(leds[0].led);
+      00000Er80r0F                  296 	mov	a, _leds+0
+      000010 72 00                  297 	push	af
+      000012 01 2F                  298 	mov	a, #0x01
+      000014r80r0B                  299 	mov	p, a
+      000016 73 00                  300 	pop	af
+      000018                        301 00103$:
+      000018 01 29                  302 	sub	a, #1
+      00001A 40 18                  303 	t0sn.io	f, c
+      00001Cr22r30                  304 	goto	00104$
+      00001E                        305 00105$:
+      00001Er80r15                  306 	sl	p
+      000020r18r30                  307 	goto	00103$
+      000022                        308 00104$:
+      000022 D0 01                  309 	mov.io	a, __pa
+      000024r80r0E                  310 	or	a, p
+      000026 90 01                  311 	mov.io	__pa, a
+                                    312 ;	main.c: 56: LED_OFF(leds[1].led);
+      000028r85r0F                  313 	mov	a, _leds+5
+      00002A 72 00                  314 	push	af
+      00002C 01 2F                  315 	mov	a, #0x01
+      00002Er80r0B                  316 	mov	p, a
+      000030 73 00                  317 	pop	af
+      000032                        318 00106$:
+      000032 01 29                  319 	sub	a, #1
+      000034 40 18                  320 	t0sn.io	f, c
+      000036r3Cr30                  321 	goto	00107$
+      000038                        322 00108$:
+      000038r80r15                  323 	sl	p
+      00003Ar32r30                  324 	goto	00106$
+      00003C                        325 00107$:
+      00003C D0 01                  326 	mov.io	a, __pa
+      00003Er80r0E                  327 	or	a, p
+      000040 90 01                  328 	mov.io	__pa, a
+                                    329 ;	main.c: 57: }
+      000042 7A 00                  330 	ret
+                                    331 ;	main.c: 62: uint8_t get_initial_psudo_rnd()
+                                    332 ;	-----------------------------------------
+                                    333 ;	 function get_initial_psudo_rnd
+                                    334 ;	-----------------------------------------
+      000044                        335 _get_initial_psudo_rnd:
+                                    336 ;	main.c: 64: uint8_t res = rnd_regs[0];
+      000044r8Ar0F                  337 	mov	a, _rnd_regs+0
+      000046r80r0B                  338 	mov	_get_initial_psudo_rnd_sloc0_1_0+0, a
+                                    339 ;	main.c: 65: res ^= rnd_regs[1];
+      000048r8Br0F                  340 	mov	a, _rnd_regs+1
+      00004Ar00r0F                  341 	xor	a, _get_initial_psudo_rnd_sloc0_1_0+0
+      00004Cr81r0B                  342 	mov	_get_initial_psudo_rnd_sloc1_1_0+0, a
+                                    343 ;	main.c: 66: res ^= rnd_regs[2];
+      00004Er8Cr0F                  344 	mov	a, _rnd_regs+2
+      000050r01r0F                  345 	xor	a, _get_initial_psudo_rnd_sloc1_1_0+0
+      000052r82r0B                  346 	mov	_get_initial_psudo_rnd_sloc2_1_0+0, a
+                                    347 ;	main.c: 67: res ^= rnd_regs[3];
+      000054r8Dr0F                  348 	mov	a, _rnd_regs+3
+      000056r02r0F                  349 	xor	a, _get_initial_psudo_rnd_sloc2_1_0+0
+                                    350 ;	main.c: 68: return res;
+                                    351 ;	main.c: 69: }
+      000058 7A 00                  352 	ret
+                                    353 ;	main.c: 72: uint8_t lfsr_shift(uint8_t index)
+                                    354 ;	-----------------------------------------
+                                    355 ;	 function lfsr_shift
+                                    356 ;	-----------------------------------------
+      00005A                        357 _lfsr_shift:
+                                    358 ;	main.c: 74: uint8_t first_bit = 0x01 & leds[index].lfs_reg; 
+      00005Ar80r0F                  359 	mov	a, _lfsr_shift_PARM_1+0
+      00005C 6B 00                  360 	sl	a
+      00005E 6B 00                  361 	sl	a
+      000060r00r0C                  362 	add	a, _lfsr_shift_PARM_1+0
+      000062r00r28                  363 	add	a, #(_leds + 0)
+      000064 02 28                  364 	add	a, #0x02
+      000066r81r0B                  365 	mov	_lfsr_shift_sloc3_1_0+0, a
+      000068r80r0B                  366 	mov	p, a
+      00006Ar81r03                  367 	idxm	a, p
+      00006Cr82r0B                  368 	mov	_lfsr_shift_sloc4_1_0+0, a
+      00006E 01 2C                  369 	and	a, #0x01
+      000070r83r0B                  370 	mov	_lfsr_shift_sloc5_1_0+0, a
+                                    371 ;	main.c: 75: uint8_t next_bit = leds[index].lfs_reg & 0x01;
+      000072r80r0B                  372 	mov	p, a
+                                    373 ;	main.c: 76: next_bit ^= (leds[index].lfs_reg >> 4) & 0x01;
+      000074r82r0F                  374 	mov	a, _lfsr_shift_sloc4_1_0+0
+      000076 6E 00                  375 	swap	a
+      000078 0F 2C                  376 	and	a, #0x0f
+      00007A 01 2C                  377 	and	a, #0x01
+      00007Cr00r0B                  378 	xor	p, a
+                                    379 ;	main.c: 77: next_bit ^= (leds[index].lfs_reg >> 3) & 0x01;
+      00007Er82r0F                  380 	mov	a, _lfsr_shift_sloc4_1_0+0
+      000080 6A 00                  381 	sr	a
+      000082 6A 00                  382 	sr	a
+      000084 6A 00                  383 	sr	a
+      000086 01 2C                  384 	and	a, #0x01
+      000088r00r0B                  385 	xor	p, a
+                                    386 ;	main.c: 78: next_bit ^= (leds[index].lfs_reg >> 2) & 0x01;
+      00008Ar82r0F                  387 	mov	a, _lfsr_shift_sloc4_1_0+0
+      00008C 6A 00                  388 	sr	a
+      00008E 6A 00                  389 	sr	a
+      000090 01 2C                  390 	and	a, #0x01
+      000092r00r0F                  391 	xor	a, p
+      000094r84r0B                  392 	mov	_lfsr_shift_sloc6_1_0+0, a
+                                    393 ;	main.c: 80: leds[index].lfs_reg >>= 1;
+      000096r82r0F                  394 	mov	a, _lfsr_shift_sloc4_1_0+0
+      000098r85r0B                  395 	mov	_lfsr_shift_sloc7_1_0+0, a
+      00009Ar05r15                  396 	sr	_lfsr_shift_sloc7_1_0+0
+      00009Cr81r0F                  397 	mov	a, _lfsr_shift_sloc3_1_0+0
+      00009Er80r0B                  398 	mov	p, a
+      0000A0r85r0F                  399 	mov	a, _lfsr_shift_sloc7_1_0+0
+      0000A2r80r03                  400 	idxm	p, a
+                                    401 ;	main.c: 81: leds[index].lfs_reg |= (next_bit << 7) & 0x80;
+      0000A4r84r0F                  402 	mov	a, _lfsr_shift_sloc6_1_0+0
+      0000A6 6A 00                  403 	sr	a
+      0000A8 00 2F                  404 	mov	a, #0x00
+      0000AA 6C 00                  405 	src	a
+      0000AC 80 2C                  406 	and	a, #0x80
+      0000AEr85r0E                  407 	or	a, _lfsr_shift_sloc7_1_0+0
+      0000B0r86r0B                  408 	mov	_lfsr_shift_sloc8_1_0+0, a
+      0000B2r81r0F                  409 	mov	a, _lfsr_shift_sloc3_1_0+0
+      0000B4r80r0B                  410 	mov	p, a
+      0000B6r86r0F                  411 	mov	a, _lfsr_shift_sloc8_1_0+0
+      0000B8r80r03                  412 	idxm	p, a
+                                    413 ;	main.c: 83: rnd_regs[index] = leds[index].lfs_reg;
+      0000BAr0Ar2F                  414 	mov	a, #(_rnd_regs + 0)
+      0000BCr00r0C                  415 	add	a, _lfsr_shift_PARM_1+0
+      0000BEr80r0B                  416 	mov	p, a
+      0000C0r86r0F                  417 	mov	a, _lfsr_shift_sloc8_1_0+0
+      0000C2r80r03                  418 	idxm	p, a
+                                    419 ;	main.c: 84: rnd_regs[index+2] = leds[index].lfs_reg;
+      0000C4r80r0F                  420 	mov	a, _lfsr_shift_PARM_1+0
+      0000C6 02 28                  421 	add	a, #0x02
+      0000C8r0Ar28                  422 	add	a, #(_rnd_regs + 0)
+      0000CA 72 00                  423 	push	af
+      0000CCr81r0F                  424 	mov	a, _lfsr_shift_sloc3_1_0+0
+      0000CEr80r0B                  425 	mov	p, a
+      0000D0r81r03                  426 	idxm	a, p
+      0000D2r80r0B                  427 	mov	p, a
+      0000D4 73 00                  428 	pop	af
+      0000D6r80r13                  429 	xch	a, p
+      0000D8r80r03                  430 	idxm	p, a
+                                    431 ;	main.c: 85: return first_bit;
+      0000DAr83r0F                  432 	mov	a, _lfsr_shift_sloc5_1_0+0
+                                    433 ;	main.c: 86: }
+      0000DC 7A 00                  434 	ret
+                                    435 ;	main.c: 89: void lfsr_init()
+                                    436 ;	-----------------------------------------
+                                    437 ;	 function lfsr_init
+                                    438 ;	-----------------------------------------
+      0000DE                        439 _lfsr_init:
+                                    440 ;	main.c: 91: for (uint8_t i = 0; i < get_initial_psudo_rnd(); i++)
+      0000DEr0Er13                  441 	clear	_lfsr_init_sloc9_1_0+0
+      0000E0                        442 00103$:
+      0000E0r44r38                  443 	call	_get_initial_psudo_rnd
+      0000E2r80r0B                  444 	mov	p, a
+      0000E4r8Er0F                  445 	mov	a, _lfsr_init_sloc9_1_0+0
+      0000E6r80r0C                  446 	sub	a, p
+      0000E8 40 1A                  447 	t1sn.io	f, c
+      0000EArFAr30                  448 	goto	00105$
+      0000EC                        449 00120$:
+                                    450 ;	main.c: 93: lfsr_shift(0);
+      0000ECr00r13                  451 	clear	_lfsr_shift_PARM_1+0
+      0000EEr5Ar38                  452 	call	_lfsr_shift
+                                    453 ;	main.c: 94: lfsr_shift(1);
+      0000F0 01 2F                  454 	mov	a, #0x01
+      0000F2r80r0B                  455 	mov	_lfsr_shift_PARM_1+0, a
+      0000F4r5Ar38                  456 	call	_lfsr_shift
+                                    457 ;	main.c: 91: for (uint8_t i = 0; i < get_initial_psudo_rnd(); i++)
+      0000F6r0Er12                  458 	inc	_lfsr_init_sloc9_1_0+0
+      0000F8rE0r30                  459 	goto	00103$
+      0000FA                        460 00105$:
+                                    461 ;	main.c: 97: }
+      0000FA 7A 00                  462 	ret
+                                    463 ;	main.c: 99: void toggle_led(uint8_t index)
+                                    464 ;	-----------------------------------------
+                                    465 ;	 function toggle_led
+                                    466 ;	-----------------------------------------
+      0000FC                        467 _toggle_led:
+                                    468 ;	main.c: 101: if (leds[index].on)
+      0000FCr80r0F                  469 	mov	a, _toggle_led_PARM_1+0
+      0000FE 6B 00                  470 	sl	a
+      000100 6B 00                  471 	sl	a
+      000102r00r0C                  472 	add	a, _toggle_led_PARM_1+0
+      000104r00r28                  473 	add	a, #(_leds + 0)
+      000106r81r0B                  474 	mov	_toggle_led_sloc10_1_0+0, a
+      000108 01 28                  475 	add	a, #0x01
+      00010Ar82r0B                  476 	mov	_toggle_led_sloc11_1_0+0, a
+      00010Cr80r0B                  477 	mov	p, a
+      00010Er81r03                  478 	idxm	a, p
+      000110 00 2B                  479 	cneqsn	a, #0x00
+      000112r3Cr31                  480 	goto	00102$
+      000114                        481 00112$:
+                                    482 ;	main.c: 103: LED_OFF(leds[index].led);
+      000114r81r0F                  483 	mov	a, _toggle_led_sloc10_1_0+0
+      000116r80r0B                  484 	mov	p, a
+      000118r81r03                  485 	idxm	a, p
+      00011A 72 00                  486 	push	af
+      00011C 01 2F                  487 	mov	a, #0x01
+      00011Er80r0B                  488 	mov	p, a
+      000120 73 00                  489 	pop	af
+      000122                        490 00113$:
+      000122 01 29                  491 	sub	a, #1
+      000124 40 18                  492 	t0sn.io	f, c
+      000126r2Cr31                  493 	goto	00114$
+      000128                        494 00115$:
+      000128r80r15                  495 	sl	p
+      00012Ar22r31                  496 	goto	00113$
+      00012C                        497 00114$:
+      00012C D0 01                  498 	mov.io	a, __pa
+      00012Er80r0E                  499 	or	a, p
+      000130 90 01                  500 	mov.io	__pa, a
+                                    501 ;	main.c: 104: leds[index].on = 0;
+      000132r82r0F                  502 	mov	a, _toggle_led_sloc11_1_0+0
+      000134r80r0B                  503 	mov	p, a
+      000136 00 2F                  504 	mov	a, #0x00
+      000138r80r03                  505 	idxm	p, a
+      00013Ar64r31                  506 	goto	00104$
+      00013C                        507 00102$:
+                                    508 ;	main.c: 108: LED_ON(leds[index].led);
+      00013Cr81r0F                  509 	mov	a, _toggle_led_sloc10_1_0+0
+      00013Er80r0B                  510 	mov	p, a
+      000140r81r03                  511 	idxm	a, p
+      000142 72 00                  512 	push	af
+      000144 01 2F                  513 	mov	a, #0x01
+      000146r80r0B                  514 	mov	p, a
+      000148 73 00                  515 	pop	af
+      00014A                        516 00116$:
+      00014A 01 29                  517 	sub	a, #1
+      00014C 40 18                  518 	t0sn.io	f, c
+      00014Er54r31                  519 	goto	00117$
+      000150                        520 00118$:
+      000150r80r15                  521 	sl	p
+      000152r4Ar31                  522 	goto	00116$
+      000154                        523 00117$:
+      000154r00r14                  524 	not	p
+      000156 D0 01                  525 	mov.io	a, __pa
+      000158r00r0E                  526 	and	a, p
+      00015A 90 01                  527 	mov.io	__pa, a
+                                    528 ;	main.c: 109: leds[index].on = 1;
+      00015Cr82r0F                  529 	mov	a, _toggle_led_sloc11_1_0+0
+      00015Er80r0B                  530 	mov	p, a
+      000160 01 2F                  531 	mov	a, #0x01
+      000162r80r03                  532 	idxm	p, a
+      000164                        533 00104$:
+                                    534 ;	main.c: 111: }
+      000164 7A 00                  535 	ret
+                                    536 ;	main.c: 113: void flash_led(uint8_t index)
+                                    537 ;	-----------------------------------------
+                                    538 ;	 function flash_led
+                                    539 ;	-----------------------------------------
+      000166                        540 _flash_led:
+                                    541 ;	main.c: 119: for (uint8_t i = 0; i < 7; i++)
+      000166r10r13                  542 	clear	_flash_led_sloc12_1_0+0
+      000168                        543 00106$:
+      000168r90r0F                  544 	mov	a, _flash_led_sloc12_1_0+0
+      00016A 07 29                  545 	sub	a, #0x07
+      00016C 40 1A                  546 	t1sn.io	f, c
+      00016Er88r31                  547 	goto	00108$
+      000170                        548 00136$:
+                                    549 ;	main.c: 121: toggle_led(index);
+      000170r8Fr0F                  550 	mov	a, _flash_led_PARM_1+0
+      000172r80r0B                  551 	mov	_toggle_led_PARM_1+0, a
+      000174rFCr38                  552 	call	_toggle_led
+                                    553 ;	main.c: 122: while (cnt++ < SHORT_DELAY) {}
+      000176r00r13                  554 	clear	p
+      000178                        555 00101$:
+      000178r80r0F                  556 	mov	a, p
+      00017Ar00r12                  557 	inc	p
+      00017C D8 2A                  558 	ceqsn	a, #0xd8
+      00017E 00 00                  559 	nop
+      000180                        560 00137$:
+      000180 40 18                  561 	t0sn.io	f, c
+      000182r78r31                  562 	goto	00101$
+      000184                        563 00138$:
+                                    564 ;	main.c: 119: for (uint8_t i = 0; i < 7; i++)
+      000184r10r12                  565 	inc	_flash_led_sloc12_1_0+0
+      000186r68r31                  566 	goto	00106$
+      000188                        567 00108$:
+                                    568 ;	main.c: 127: }
+      000188 7A 00                  569 	ret
+                                    570 ;	main.c: 129: void load_next_delay_target(uint8_t index)
+                                    571 ;	-----------------------------------------
+                                    572 ;	 function load_next_delay_target
+                                    573 ;	-----------------------------------------
+      00018A                        574 _load_next_delay_target:
+                                    575 ;	main.c: 131: leds[index].delay_target = (lfsr_shift(index) << 2) | (lfsr_shift(index) << 1) | lfsr_shift(index);
+      00018Ar91r0F                  576 	mov	a, _load_next_delay_target_PARM_1+0
+      00018C 6B 00                  577 	sl	a
+      00018E 6B 00                  578 	sl	a
+      000190r11r0C                  579 	add	a, _load_next_delay_target_PARM_1+0
+      000192r00r28                  580 	add	a, #(_leds + 0)
+      000194 03 28                  581 	add	a, #0x03
+      000196r92r0B                  582 	mov	_load_next_delay_target_sloc13_1_0+0, a
+      000198r91r0F                  583 	mov	a, _load_next_delay_target_PARM_1+0
+      00019Ar80r0B                  584 	mov	_lfsr_shift_PARM_1+0, a
+      00019Cr5Ar38                  585 	call	_lfsr_shift
+      00019Er93r0B                  586 	mov	_load_next_delay_target_sloc14_1_0+0, a
+      0001A0r93r15                  587 	sl	_load_next_delay_target_sloc14_1_0+0
+      0001A2r93r15                  588 	sl	_load_next_delay_target_sloc14_1_0+0
+      0001A4r91r0F                  589 	mov	a, _load_next_delay_target_PARM_1+0
+      0001A6r80r0B                  590 	mov	_lfsr_shift_PARM_1+0, a
+      0001A8r5Ar38                  591 	call	_lfsr_shift
+      0001AA 6B 00                  592 	sl	a
+      0001ACr93r0E                  593 	or	a, _load_next_delay_target_sloc14_1_0+0
+      0001AEr94r0B                  594 	mov	_load_next_delay_target_sloc15_1_0+0, a
+      0001B0r91r0F                  595 	mov	a, _load_next_delay_target_PARM_1+0
+      0001B2r80r0B                  596 	mov	_lfsr_shift_PARM_1+0, a
+      0001B4r5Ar38                  597 	call	_lfsr_shift
+      0001B6r94r0E                  598 	or	a, _load_next_delay_target_sloc15_1_0+0
+      0001B8r95r0B                  599 	mov	_load_next_delay_target_sloc16_1_0+0, a
+      0001BAr92r0F                  600 	mov	a, _load_next_delay_target_sloc13_1_0+0
+      0001BCr80r0B                  601 	mov	p, a
+      0001BEr95r0F                  602 	mov	a, _load_next_delay_target_sloc16_1_0+0
+      0001C0r80r03                  603 	idxm	p, a
+                                    604 ;	main.c: 132: leds[index].delay_target += 2;
+      0001C2r95r0F                  605 	mov	a, _load_next_delay_target_sloc16_1_0+0
+      0001C4 02 28                  606 	add	a, #0x02
+      0001C6r80r0B                  607 	mov	p, a
+      0001C8r92r0F                  608 	mov	a, _load_next_delay_target_sloc13_1_0+0
+      0001CAr80r13                  609 	xch	a, p
+      0001CCr80r03                  610 	idxm	p, a
+                                    611 ;	main.c: 134: }
+      0001CE 7A 00                  612 	ret
+                                    613 ;	main.c: 136: void handle_tick()
+                                    614 ;	-----------------------------------------
+                                    615 ;	 function handle_tick
+                                    616 ;	-----------------------------------------
+      0001D0                        617 _handle_tick:
+                                    618 ;	main.c: 138: for (uint8_t i = 0; i < 2; i++)
+      0001D0r16r13                  619 	clear	_handle_tick_sloc17_1_0+0
+      0001D2                        620 00108$:
+      0001D2r96r0F                  621 	mov	a, _handle_tick_sloc17_1_0+0
+      0001D4 02 29                  622 	sub	a, #0x02
+      0001D6 40 1A                  623 	t1sn.io	f, c
+      0001D8r5Cr32                  624 	goto	00110$
+      0001DA                        625 00137$:
+                                    626 ;	main.c: 140: leds[i].delay_count++;
+      0001DAr96r0F                  627 	mov	a, _handle_tick_sloc17_1_0+0
+      0001DC 6B 00                  628 	sl	a
+      0001DE 6B 00                  629 	sl	a
+      0001E0r16r0C                  630 	add	a, _handle_tick_sloc17_1_0+0
+      0001E2r00r28                  631 	add	a, #(_leds + 0)
+      0001E4r97r0B                  632 	mov	_handle_tick_sloc18_1_0+0, a
+      0001E6 04 28                  633 	add	a, #0x04
+      0001E8r80r0B                  634 	mov	p, a
+      0001EAr81r03                  635 	idxm	a, p
+      0001EC 01 28                  636 	add	a, #0x01
+      0001EEr98r0B                  637 	mov	_handle_tick_sloc19_1_0+0, a
+      0001F0r80r03                  638 	idxm	p, a
+                                    639 ;	main.c: 141: if (leds[i].delay_count >= leds[i].delay_target) 
+      0001F2r97r0F                  640 	mov	a, _handle_tick_sloc18_1_0+0
+      0001F4 03 28                  641 	add	a, #0x03
+      0001F6r80r0B                  642 	mov	p, a
+      0001F8r81r03                  643 	idxm	a, p
+      0001FAr80r0B                  644 	mov	p, a
+      0001FCr98r0F                  645 	mov	a, _handle_tick_sloc19_1_0+0
+      0001FEr80r0C                  646 	sub	a, p
+      000200 40 18                  647 	t0sn.io	f, c
+      000202r58r32                  648 	goto	00109$
+      000204                        649 00138$:
+                                    650 ;	main.c: 143: if (leds[i].on)
+      000204r97r0F                  651 	mov	a, _handle_tick_sloc18_1_0+0
+      000206 01 28                  652 	add	a, #0x01
+      000208r99r0B                  653 	mov	_handle_tick_sloc20_1_0+0, a
+      00020Ar80r0B                  654 	mov	p, a
+      00020Cr81r03                  655 	idxm	a, p
+      00020E 00 2B                  656 	cneqsn	a, #0x00
+      000210r3Ar32                  657 	goto	00102$
+      000212                        658 00139$:
+                                    659 ;	main.c: 145: LED_OFF(leds[i].led);
+      000212r97r0F                  660 	mov	a, _handle_tick_sloc18_1_0+0
+      000214r80r0B                  661 	mov	p, a
+      000216r81r03                  662 	idxm	a, p
+      000218 72 00                  663 	push	af
+      00021A 01 2F                  664 	mov	a, #0x01
+      00021Cr80r0B                  665 	mov	p, a
+      00021E 73 00                  666 	pop	af
+      000220                        667 00140$:
+      000220 01 29                  668 	sub	a, #1
+      000222 40 18                  669 	t0sn.io	f, c
+      000224r2Ar32                  670 	goto	00141$
+      000226                        671 00142$:
+      000226r80r15                  672 	sl	p
+      000228r20r32                  673 	goto	00140$
+      00022A                        674 00141$:
+      00022A D0 01                  675 	mov.io	a, __pa
+      00022Cr80r0E                  676 	or	a, p
+      00022E 90 01                  677 	mov.io	__pa, a
+                                    678 ;	main.c: 146: leds[i].on = 0;
+      000230r99r0F                  679 	mov	a, _handle_tick_sloc20_1_0+0
+      000232r80r0B                  680 	mov	p, a
+      000234 00 2F                  681 	mov	a, #0x00
+      000236r80r03                  682 	idxm	p, a
+      000238r40r32                  683 	goto	00103$
+      00023A                        684 00102$:
+                                    685 ;	main.c: 150: flash_led(i);
+      00023Ar96r0F                  686 	mov	a, _handle_tick_sloc17_1_0+0
+      00023Cr8Fr0B                  687 	mov	_flash_led_PARM_1+0, a
+      00023Er66r39                  688 	call	_flash_led
+      000240                        689 00103$:
+                                    690 ;	main.c: 153: load_next_delay_target(i);
+      000240r96r0F                  691 	mov	a, _handle_tick_sloc17_1_0+0
+      000242r91r0B                  692 	mov	_load_next_delay_target_PARM_1+0, a
+      000244r8Ar39                  693 	call	_load_next_delay_target
+                                    694 ;	main.c: 154: leds[i].delay_count = 0;
+      000246r96r0F                  695 	mov	a, _handle_tick_sloc17_1_0+0
+      000248 6B 00                  696 	sl	a
+      00024A 6B 00                  697 	sl	a
+      00024Cr16r0C                  698 	add	a, _handle_tick_sloc17_1_0+0
+      00024Er00r28                  699 	add	a, #(_leds + 0)
+      000250 04 28                  700 	add	a, #0x04
+      000252r80r0B                  701 	mov	p, a
+      000254 00 2F                  702 	mov	a, #0x00
+      000256r80r03                  703 	idxm	p, a
+      000258                        704 00109$:
+                                    705 ;	main.c: 138: for (uint8_t i = 0; i < 2; i++)
+      000258r16r12                  706 	inc	_handle_tick_sloc17_1_0+0
+      00025ArD2r31                  707 	goto	00108$
+      00025C                        708 00110$:
+                                    709 ;	main.c: 157: }
+      00025C 7A 00                  710 	ret
+                                    711 ;	main.c: 159: void main(void) {
+                                    712 ;	-----------------------------------------
+                                    713 ;	 function main
+                                    714 ;	-----------------------------------------
+      00025E                        715 _main:
+                                    716 ;	main.c: 161: uint16_t cnt = 0;
+      00025Er1Ar13                  717 	clear	_main_sloc21_1_0+0
+      000260r1Br13                  718 	clear	_main_sloc21_1_0+1
+                                    719 ;	main.c: 162: sys_init();
+      000262r00r38                  720 	call	_sys_init
+                                    721 ;	main.c: 163: lfsr_init();
+      000264rDEr38                  722 	call	_lfsr_init
+                                    723 ;	main.c: 169: while (cnt++ < delay) {}
+      000266                        724 00101$:
+      000266r9Br0F                  725 	mov	a, _main_sloc21_1_0+1
+      000268r80r0B                  726 	mov	p, a
+      00026Ar9Ar0F                  727 	mov	a, _main_sloc21_1_0+0
+      00026Cr1Ar12                  728 	inc	_main_sloc21_1_0+0
+      00026Er1Br10                  729 	addc	_main_sloc21_1_0+1
+      000270 3A 29                  730 	sub	a, #0x3a
+      000272 0A 2F                  731 	mov	a, #0x0a
+      000274r80r13                  732 	xch	a, p
+      000276r80r0D                  733 	subc	a, p
+      000278 40 18                  734 	t0sn.io	f, c
+      00027Ar66r32                  735 	goto	00101$
+      00027C                        736 00121$:
+                                    737 ;	main.c: 170: cnt = 0;        
+      00027Cr1Ar13                  738 	clear	_main_sloc21_1_0+0
+      00027Er1Br13                  739 	clear	_main_sloc21_1_0+1
+                                    740 ;	main.c: 171: handle_tick();
+      000280rD0r39                  741 	call	_handle_tick
+      000282r66r32                  742 	goto	00101$
+                                    743 ;	main.c: 181: }
+      000284 7A 00                  744 	ret
+                                    745 	.area CODE
+                                    746 	.area CONST
+                                    747 	.area CABS (ABS)
