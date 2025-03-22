@@ -246,7 +246,7 @@
       00000Er00r28                  246 	add	a, #l_DATA
       000010r00r17                  247 	ceqsn	a, p
       000012r06r30                  248 	goto	00001$
-                                    249 ;	main.c: 34: LED_REG leds[] = {
+                                    249 ;	main.c: 33: LED_REG leds[] = {
       000014 04 2F                  250 	mov	a, #0x04
       000016r80r0B                  251 	mov	_leds+0, a
       000018 05 2F                  252 	mov	a, #0x05
@@ -277,22 +277,22 @@
                                     277 ; code
                                     278 ;--------------------------------------------------------
                                     279 	.area CODE
-                                    280 ;	main.c: 50: void sys_init()
+                                    280 ;	main.c: 49: void sys_init()
                                     281 ;	-----------------------------------------
                                     282 ;	 function sys_init
                                     283 ;	-----------------------------------------
       000000                        284 _sys_init:
-                                    285 ;	main.c: 52: CLKMD &= ~(CLKMD_ENABLE_WATCHDOG);
+                                    285 ;	main.c: 51: CLKMD &= ~(CLKMD_ENABLE_WATCHDOG);
       000000 43 1C                  286 	set0.io	__clkmd, #1
-                                    287 ;	main.c: 53: CLKMD |= CLKMD_ENABLE_IHRC | CLKMD_IHRC_DIV2;
+                                    287 ;	main.c: 52: CLKMD |= CLKMD_ENABLE_IHRC | CLKMD_IHRC_DIV2;
       000002 C3 01                  288 	mov.io	a, __clkmd
       000004 30 2D                  289 	or	a, #0x30
       000006 83 01                  290 	mov.io	__clkmd, a
-                                    291 ;	main.c: 54: PAC |= LED_SHIFT(LED_BIT_0) | LED_SHIFT(LED_BIT_1);
+                                    291 ;	main.c: 53: PAC |= LED_SHIFT(LED_BIT_0) | LED_SHIFT(LED_BIT_1);
       000008 D1 01                  292 	mov.io	a, __pac
       00000A 30 2D                  293 	or	a, #0x30
       00000C 91 01                  294 	mov.io	__pac, a
-                                    295 ;	main.c: 55: LED_OFF(leds[0].led);
+                                    295 ;	main.c: 54: LED_OFF(leds[0].led);
       00000Er80r0F                  296 	mov	a, _leds+0
       000010 72 00                  297 	push	af
       000012 01 2F                  298 	mov	a, #0x01
@@ -309,7 +309,7 @@
       000022 D0 01                  309 	mov.io	a, __pa
       000024r80r0E                  310 	or	a, p
       000026 90 01                  311 	mov.io	__pa, a
-                                    312 ;	main.c: 56: LED_OFF(leds[1].led);
+                                    312 ;	main.c: 55: LED_OFF(leds[1].led);
       000028r85r0F                  313 	mov	a, _leds+5
       00002A 72 00                  314 	push	af
       00002C 01 2F                  315 	mov	a, #0x01
@@ -326,36 +326,36 @@
       00003C D0 01                  326 	mov.io	a, __pa
       00003Er80r0E                  327 	or	a, p
       000040 90 01                  328 	mov.io	__pa, a
-                                    329 ;	main.c: 57: }
+                                    329 ;	main.c: 56: }
       000042 7A 00                  330 	ret
-                                    331 ;	main.c: 62: uint8_t get_initial_psudo_rnd()
+                                    331 ;	main.c: 61: uint8_t get_initial_psudo_rnd()
                                     332 ;	-----------------------------------------
                                     333 ;	 function get_initial_psudo_rnd
                                     334 ;	-----------------------------------------
       000044                        335 _get_initial_psudo_rnd:
-                                    336 ;	main.c: 64: uint8_t res = rnd_regs[0];
+                                    336 ;	main.c: 63: uint8_t res = rnd_regs[0];
       000044r8Ar0F                  337 	mov	a, _rnd_regs+0
       000046r80r0B                  338 	mov	_get_initial_psudo_rnd_sloc0_1_0+0, a
-                                    339 ;	main.c: 65: res ^= rnd_regs[1];
+                                    339 ;	main.c: 64: res ^= rnd_regs[1];
       000048r8Br0F                  340 	mov	a, _rnd_regs+1
       00004Ar00r0F                  341 	xor	a, _get_initial_psudo_rnd_sloc0_1_0+0
       00004Cr81r0B                  342 	mov	_get_initial_psudo_rnd_sloc1_1_0+0, a
-                                    343 ;	main.c: 66: res ^= rnd_regs[2];
+                                    343 ;	main.c: 65: res ^= rnd_regs[2];
       00004Er8Cr0F                  344 	mov	a, _rnd_regs+2
       000050r01r0F                  345 	xor	a, _get_initial_psudo_rnd_sloc1_1_0+0
       000052r82r0B                  346 	mov	_get_initial_psudo_rnd_sloc2_1_0+0, a
-                                    347 ;	main.c: 67: res ^= rnd_regs[3];
+                                    347 ;	main.c: 66: res ^= rnd_regs[3];
       000054r8Dr0F                  348 	mov	a, _rnd_regs+3
       000056r02r0F                  349 	xor	a, _get_initial_psudo_rnd_sloc2_1_0+0
-                                    350 ;	main.c: 68: return res;
-                                    351 ;	main.c: 69: }
+                                    350 ;	main.c: 67: return res;
+                                    351 ;	main.c: 68: }
       000058 7A 00                  352 	ret
-                                    353 ;	main.c: 72: uint8_t lfsr_shift(uint8_t index)
+                                    353 ;	main.c: 71: uint8_t lfsr_shift(uint8_t index)
                                     354 ;	-----------------------------------------
                                     355 ;	 function lfsr_shift
                                     356 ;	-----------------------------------------
       00005A                        357 _lfsr_shift:
-                                    358 ;	main.c: 74: uint8_t first_bit = 0x01 & leds[index].lfs_reg; 
+                                    358 ;	main.c: 73: uint8_t first_bit = 0x01 & leds[index].lfs_reg; 
       00005Ar80r0F                  359 	mov	a, _lfsr_shift_PARM_1+0
       00005C 6B 00                  360 	sl	a
       00005E 6B 00                  361 	sl	a
@@ -368,29 +368,29 @@
       00006Cr82r0B                  368 	mov	_lfsr_shift_sloc4_1_0+0, a
       00006E 01 2C                  369 	and	a, #0x01
       000070r83r0B                  370 	mov	_lfsr_shift_sloc5_1_0+0, a
-                                    371 ;	main.c: 75: uint8_t next_bit = leds[index].lfs_reg & 0x01;
+                                    371 ;	main.c: 74: uint8_t next_bit = leds[index].lfs_reg & 0x01;
       000072r80r0B                  372 	mov	p, a
-                                    373 ;	main.c: 76: next_bit ^= (leds[index].lfs_reg >> 4) & 0x01;
+                                    373 ;	main.c: 75: next_bit ^= (leds[index].lfs_reg >> 4) & 0x01;
       000074r82r0F                  374 	mov	a, _lfsr_shift_sloc4_1_0+0
       000076 6E 00                  375 	swap	a
       000078 0F 2C                  376 	and	a, #0x0f
       00007A 01 2C                  377 	and	a, #0x01
       00007Cr00r0B                  378 	xor	p, a
-                                    379 ;	main.c: 77: next_bit ^= (leds[index].lfs_reg >> 3) & 0x01;
+                                    379 ;	main.c: 76: next_bit ^= (leds[index].lfs_reg >> 3) & 0x01;
       00007Er82r0F                  380 	mov	a, _lfsr_shift_sloc4_1_0+0
       000080 6A 00                  381 	sr	a
       000082 6A 00                  382 	sr	a
       000084 6A 00                  383 	sr	a
       000086 01 2C                  384 	and	a, #0x01
       000088r00r0B                  385 	xor	p, a
-                                    386 ;	main.c: 78: next_bit ^= (leds[index].lfs_reg >> 2) & 0x01;
+                                    386 ;	main.c: 77: next_bit ^= (leds[index].lfs_reg >> 2) & 0x01;
       00008Ar82r0F                  387 	mov	a, _lfsr_shift_sloc4_1_0+0
       00008C 6A 00                  388 	sr	a
       00008E 6A 00                  389 	sr	a
       000090 01 2C                  390 	and	a, #0x01
       000092r00r0F                  391 	xor	a, p
       000094r84r0B                  392 	mov	_lfsr_shift_sloc6_1_0+0, a
-                                    393 ;	main.c: 80: leds[index].lfs_reg >>= 1;
+                                    393 ;	main.c: 79: leds[index].lfs_reg >>= 1;
       000096r82r0F                  394 	mov	a, _lfsr_shift_sloc4_1_0+0
       000098r85r0B                  395 	mov	_lfsr_shift_sloc7_1_0+0, a
       00009Ar05r15                  396 	sr	_lfsr_shift_sloc7_1_0+0
@@ -398,7 +398,7 @@
       00009Er80r0B                  398 	mov	p, a
       0000A0r85r0F                  399 	mov	a, _lfsr_shift_sloc7_1_0+0
       0000A2r80r03                  400 	idxm	p, a
-                                    401 ;	main.c: 81: leds[index].lfs_reg |= (next_bit << 7) & 0x80;
+                                    401 ;	main.c: 80: leds[index].lfs_reg |= (next_bit << 7) & 0x80;
       0000A4r84r0F                  402 	mov	a, _lfsr_shift_sloc6_1_0+0
       0000A6 6A 00                  403 	sr	a
       0000A8 00 2F                  404 	mov	a, #0x00
@@ -410,13 +410,13 @@
       0000B4r80r0B                  410 	mov	p, a
       0000B6r86r0F                  411 	mov	a, _lfsr_shift_sloc8_1_0+0
       0000B8r80r03                  412 	idxm	p, a
-                                    413 ;	main.c: 83: rnd_regs[index] = leds[index].lfs_reg;
+                                    413 ;	main.c: 82: rnd_regs[index] = leds[index].lfs_reg;
       0000BAr0Ar2F                  414 	mov	a, #(_rnd_regs + 0)
       0000BCr00r0C                  415 	add	a, _lfsr_shift_PARM_1+0
       0000BEr80r0B                  416 	mov	p, a
       0000C0r86r0F                  417 	mov	a, _lfsr_shift_sloc8_1_0+0
       0000C2r80r03                  418 	idxm	p, a
-                                    419 ;	main.c: 84: rnd_regs[index+2] = leds[index].lfs_reg;
+                                    419 ;	main.c: 83: rnd_regs[index+2] = leds[index].lfs_reg;
       0000C4r80r0F                  420 	mov	a, _lfsr_shift_PARM_1+0
       0000C6 02 28                  421 	add	a, #0x02
       0000C8r0Ar28                  422 	add	a, #(_rnd_regs + 0)
@@ -428,16 +428,16 @@
       0000D4 73 00                  428 	pop	af
       0000D6r80r13                  429 	xch	a, p
       0000D8r80r03                  430 	idxm	p, a
-                                    431 ;	main.c: 85: return first_bit;
+                                    431 ;	main.c: 84: return first_bit;
       0000DAr83r0F                  432 	mov	a, _lfsr_shift_sloc5_1_0+0
-                                    433 ;	main.c: 86: }
+                                    433 ;	main.c: 85: }
       0000DC 7A 00                  434 	ret
-                                    435 ;	main.c: 89: void lfsr_init()
+                                    435 ;	main.c: 88: void lfsr_init()
                                     436 ;	-----------------------------------------
                                     437 ;	 function lfsr_init
                                     438 ;	-----------------------------------------
       0000DE                        439 _lfsr_init:
-                                    440 ;	main.c: 91: for (uint8_t i = 0; i < get_initial_psudo_rnd(); i++)
+                                    440 ;	main.c: 90: for (uint8_t i = 0; i < get_initial_psudo_rnd(); i++)
       0000DEr0Er13                  441 	clear	_lfsr_init_sloc9_1_0+0
       0000E0                        442 00103$:
       0000E0r44r38                  443 	call	_get_initial_psudo_rnd
@@ -447,25 +447,25 @@
       0000E8 40 1A                  447 	t1sn.io	f, c
       0000EArFAr30                  448 	goto	00105$
       0000EC                        449 00120$:
-                                    450 ;	main.c: 93: lfsr_shift(0);
+                                    450 ;	main.c: 92: lfsr_shift(0);
       0000ECr00r13                  451 	clear	_lfsr_shift_PARM_1+0
       0000EEr5Ar38                  452 	call	_lfsr_shift
-                                    453 ;	main.c: 94: lfsr_shift(1);
+                                    453 ;	main.c: 93: lfsr_shift(1);
       0000F0 01 2F                  454 	mov	a, #0x01
       0000F2r80r0B                  455 	mov	_lfsr_shift_PARM_1+0, a
       0000F4r5Ar38                  456 	call	_lfsr_shift
-                                    457 ;	main.c: 91: for (uint8_t i = 0; i < get_initial_psudo_rnd(); i++)
+                                    457 ;	main.c: 90: for (uint8_t i = 0; i < get_initial_psudo_rnd(); i++)
       0000F6r0Er12                  458 	inc	_lfsr_init_sloc9_1_0+0
       0000F8rE0r30                  459 	goto	00103$
       0000FA                        460 00105$:
-                                    461 ;	main.c: 97: }
+                                    461 ;	main.c: 96: }
       0000FA 7A 00                  462 	ret
-                                    463 ;	main.c: 99: void toggle_led(uint8_t index)
+                                    463 ;	main.c: 98: void toggle_led(uint8_t index)
                                     464 ;	-----------------------------------------
                                     465 ;	 function toggle_led
                                     466 ;	-----------------------------------------
       0000FC                        467 _toggle_led:
-                                    468 ;	main.c: 101: if (leds[index].on)
+                                    468 ;	main.c: 100: if (leds[index].on)
       0000FCr80r0F                  469 	mov	a, _toggle_led_PARM_1+0
       0000FE 6B 00                  470 	sl	a
       000100 6B 00                  471 	sl	a
@@ -479,7 +479,7 @@
       000110 00 2B                  479 	cneqsn	a, #0x00
       000112r3Cr31                  480 	goto	00102$
       000114                        481 00112$:
-                                    482 ;	main.c: 103: LED_OFF(leds[index].led);
+                                    482 ;	main.c: 102: LED_OFF(leds[index].led);
       000114r81r0F                  483 	mov	a, _toggle_led_sloc10_1_0+0
       000116r80r0B                  484 	mov	p, a
       000118r81r03                  485 	idxm	a, p
@@ -498,14 +498,14 @@
       00012C D0 01                  498 	mov.io	a, __pa
       00012Er80r0E                  499 	or	a, p
       000130 90 01                  500 	mov.io	__pa, a
-                                    501 ;	main.c: 104: leds[index].on = 0;
+                                    501 ;	main.c: 103: leds[index].on = 0;
       000132r82r0F                  502 	mov	a, _toggle_led_sloc11_1_0+0
       000134r80r0B                  503 	mov	p, a
       000136 00 2F                  504 	mov	a, #0x00
       000138r80r03                  505 	idxm	p, a
       00013Ar64r31                  506 	goto	00104$
       00013C                        507 00102$:
-                                    508 ;	main.c: 108: LED_ON(leds[index].led);
+                                    508 ;	main.c: 107: LED_ON(leds[index].led);
       00013Cr81r0F                  509 	mov	a, _toggle_led_sloc10_1_0+0
       00013Er80r0B                  510 	mov	p, a
       000140r81r03                  511 	idxm	a, p
@@ -525,20 +525,20 @@
       000156 D0 01                  525 	mov.io	a, __pa
       000158r00r0E                  526 	and	a, p
       00015A 90 01                  527 	mov.io	__pa, a
-                                    528 ;	main.c: 109: leds[index].on = 1;
+                                    528 ;	main.c: 108: leds[index].on = 1;
       00015Cr82r0F                  529 	mov	a, _toggle_led_sloc11_1_0+0
       00015Er80r0B                  530 	mov	p, a
       000160 01 2F                  531 	mov	a, #0x01
       000162r80r03                  532 	idxm	p, a
       000164                        533 00104$:
-                                    534 ;	main.c: 111: }
+                                    534 ;	main.c: 110: }
       000164 7A 00                  535 	ret
-                                    536 ;	main.c: 113: void flash_led(uint8_t index)
+                                    536 ;	main.c: 112: void flash_led(uint8_t index)
                                     537 ;	-----------------------------------------
                                     538 ;	 function flash_led
                                     539 ;	-----------------------------------------
       000166                        540 _flash_led:
-                                    541 ;	main.c: 119: for (uint8_t i = 0; i < 7; i++)
+                                    541 ;	main.c: 118: for (uint8_t i = 0; i < 7; i++)
       000166r10r13                  542 	clear	_flash_led_sloc12_1_0+0
       000168                        543 00106$:
       000168r90r0F                  544 	mov	a, _flash_led_sloc12_1_0+0
@@ -546,11 +546,11 @@
       00016C 40 1A                  546 	t1sn.io	f, c
       00016Er88r31                  547 	goto	00108$
       000170                        548 00136$:
-                                    549 ;	main.c: 121: toggle_led(index);
+                                    549 ;	main.c: 120: toggle_led(index);
       000170r8Fr0F                  550 	mov	a, _flash_led_PARM_1+0
       000172r80r0B                  551 	mov	_toggle_led_PARM_1+0, a
       000174rFCr38                  552 	call	_toggle_led
-                                    553 ;	main.c: 122: while (cnt++ < SHORT_DELAY) {}
+                                    553 ;	main.c: 121: while (cnt++ < SHORT_DELAY) {}
       000176r00r13                  554 	clear	p
       000178                        555 00101$:
       000178r80r0F                  556 	mov	a, p
@@ -561,18 +561,18 @@
       000180 40 18                  561 	t0sn.io	f, c
       000182r78r31                  562 	goto	00101$
       000184                        563 00138$:
-                                    564 ;	main.c: 119: for (uint8_t i = 0; i < 7; i++)
+                                    564 ;	main.c: 118: for (uint8_t i = 0; i < 7; i++)
       000184r10r12                  565 	inc	_flash_led_sloc12_1_0+0
       000186r68r31                  566 	goto	00106$
       000188                        567 00108$:
-                                    568 ;	main.c: 127: }
+                                    568 ;	main.c: 126: }
       000188 7A 00                  569 	ret
-                                    570 ;	main.c: 129: void load_next_delay_target(uint8_t index)
+                                    570 ;	main.c: 128: void load_next_delay_target(uint8_t index)
                                     571 ;	-----------------------------------------
                                     572 ;	 function load_next_delay_target
                                     573 ;	-----------------------------------------
       00018A                        574 _load_next_delay_target:
-                                    575 ;	main.c: 131: leds[index].delay_target = (lfsr_shift(index) << 2) | (lfsr_shift(index) << 1) | lfsr_shift(index);
+                                    575 ;	main.c: 130: leds[index].delay_target = (lfsr_shift(index) << 2) | (lfsr_shift(index) << 1) | lfsr_shift(index);
       00018Ar91r0F                  576 	mov	a, _load_next_delay_target_PARM_1+0
       00018C 6B 00                  577 	sl	a
       00018E 6B 00                  578 	sl	a
@@ -601,21 +601,21 @@
       0001BCr80r0B                  601 	mov	p, a
       0001BEr95r0F                  602 	mov	a, _load_next_delay_target_sloc16_1_0+0
       0001C0r80r03                  603 	idxm	p, a
-                                    604 ;	main.c: 132: leds[index].delay_target += 2;
+                                    604 ;	main.c: 131: leds[index].delay_target += 2;
       0001C2r95r0F                  605 	mov	a, _load_next_delay_target_sloc16_1_0+0
       0001C4 02 28                  606 	add	a, #0x02
       0001C6r80r0B                  607 	mov	p, a
       0001C8r92r0F                  608 	mov	a, _load_next_delay_target_sloc13_1_0+0
       0001CAr80r13                  609 	xch	a, p
       0001CCr80r03                  610 	idxm	p, a
-                                    611 ;	main.c: 134: }
+                                    611 ;	main.c: 133: }
       0001CE 7A 00                  612 	ret
-                                    613 ;	main.c: 136: void handle_tick()
+                                    613 ;	main.c: 135: void handle_tick()
                                     614 ;	-----------------------------------------
                                     615 ;	 function handle_tick
                                     616 ;	-----------------------------------------
       0001D0                        617 _handle_tick:
-                                    618 ;	main.c: 138: for (uint8_t i = 0; i < 2; i++)
+                                    618 ;	main.c: 137: for (uint8_t i = 0; i < 2; i++)
       0001D0r16r13                  619 	clear	_handle_tick_sloc17_1_0+0
       0001D2                        620 00108$:
       0001D2r96r0F                  621 	mov	a, _handle_tick_sloc17_1_0+0
@@ -623,7 +623,7 @@
       0001D6 40 1A                  623 	t1sn.io	f, c
       0001D8r5Cr32                  624 	goto	00110$
       0001DA                        625 00137$:
-                                    626 ;	main.c: 140: leds[i].delay_count++;
+                                    626 ;	main.c: 139: leds[i].delay_count++;
       0001DAr96r0F                  627 	mov	a, _handle_tick_sloc17_1_0+0
       0001DC 6B 00                  628 	sl	a
       0001DE 6B 00                  629 	sl	a
@@ -636,7 +636,7 @@
       0001EC 01 28                  636 	add	a, #0x01
       0001EEr98r0B                  637 	mov	_handle_tick_sloc19_1_0+0, a
       0001F0r80r03                  638 	idxm	p, a
-                                    639 ;	main.c: 141: if (leds[i].delay_count >= leds[i].delay_target) 
+                                    639 ;	main.c: 140: if (leds[i].delay_count >= leds[i].delay_target) 
       0001F2r97r0F                  640 	mov	a, _handle_tick_sloc18_1_0+0
       0001F4 03 28                  641 	add	a, #0x03
       0001F6r80r0B                  642 	mov	p, a
@@ -647,7 +647,7 @@
       000200 40 18                  647 	t0sn.io	f, c
       000202r58r32                  648 	goto	00109$
       000204                        649 00138$:
-                                    650 ;	main.c: 143: if (leds[i].on)
+                                    650 ;	main.c: 142: if (leds[i].on)
       000204r97r0F                  651 	mov	a, _handle_tick_sloc18_1_0+0
       000206 01 28                  652 	add	a, #0x01
       000208r99r0B                  653 	mov	_handle_tick_sloc20_1_0+0, a
@@ -656,7 +656,7 @@
       00020E 00 2B                  656 	cneqsn	a, #0x00
       000210r3Ar32                  657 	goto	00102$
       000212                        658 00139$:
-                                    659 ;	main.c: 145: LED_OFF(leds[i].led);
+                                    659 ;	main.c: 144: LED_OFF(leds[i].led);
       000212r97r0F                  660 	mov	a, _handle_tick_sloc18_1_0+0
       000214r80r0B                  661 	mov	p, a
       000216r81r03                  662 	idxm	a, p
@@ -675,23 +675,23 @@
       00022A D0 01                  675 	mov.io	a, __pa
       00022Cr80r0E                  676 	or	a, p
       00022E 90 01                  677 	mov.io	__pa, a
-                                    678 ;	main.c: 146: leds[i].on = 0;
+                                    678 ;	main.c: 145: leds[i].on = 0;
       000230r99r0F                  679 	mov	a, _handle_tick_sloc20_1_0+0
       000232r80r0B                  680 	mov	p, a
       000234 00 2F                  681 	mov	a, #0x00
       000236r80r03                  682 	idxm	p, a
       000238r40r32                  683 	goto	00103$
       00023A                        684 00102$:
-                                    685 ;	main.c: 150: flash_led(i);
+                                    685 ;	main.c: 149: flash_led(i);
       00023Ar96r0F                  686 	mov	a, _handle_tick_sloc17_1_0+0
       00023Cr8Fr0B                  687 	mov	_flash_led_PARM_1+0, a
       00023Er66r39                  688 	call	_flash_led
       000240                        689 00103$:
-                                    690 ;	main.c: 153: load_next_delay_target(i);
+                                    690 ;	main.c: 152: load_next_delay_target(i);
       000240r96r0F                  691 	mov	a, _handle_tick_sloc17_1_0+0
       000242r91r0B                  692 	mov	_load_next_delay_target_PARM_1+0, a
       000244r8Ar39                  693 	call	_load_next_delay_target
-                                    694 ;	main.c: 154: leds[i].delay_count = 0;
+                                    694 ;	main.c: 153: leds[i].delay_count = 0;
       000246r96r0F                  695 	mov	a, _handle_tick_sloc17_1_0+0
       000248 6B 00                  696 	sl	a
       00024A 6B 00                  697 	sl	a
@@ -702,25 +702,25 @@
       000254 00 2F                  702 	mov	a, #0x00
       000256r80r03                  703 	idxm	p, a
       000258                        704 00109$:
-                                    705 ;	main.c: 138: for (uint8_t i = 0; i < 2; i++)
+                                    705 ;	main.c: 137: for (uint8_t i = 0; i < 2; i++)
       000258r16r12                  706 	inc	_handle_tick_sloc17_1_0+0
       00025ArD2r31                  707 	goto	00108$
       00025C                        708 00110$:
-                                    709 ;	main.c: 157: }
+                                    709 ;	main.c: 156: }
       00025C 7A 00                  710 	ret
-                                    711 ;	main.c: 159: void main(void) {
+                                    711 ;	main.c: 158: void main(void) {
                                     712 ;	-----------------------------------------
                                     713 ;	 function main
                                     714 ;	-----------------------------------------
       00025E                        715 _main:
-                                    716 ;	main.c: 161: uint16_t cnt = 0;
+                                    716 ;	main.c: 160: uint16_t cnt = 0;
       00025Er1Ar13                  717 	clear	_main_sloc21_1_0+0
       000260r1Br13                  718 	clear	_main_sloc21_1_0+1
-                                    719 ;	main.c: 162: sys_init();
+                                    719 ;	main.c: 161: sys_init();
       000262r00r38                  720 	call	_sys_init
-                                    721 ;	main.c: 163: lfsr_init();
+                                    721 ;	main.c: 162: lfsr_init();
       000264rDEr38                  722 	call	_lfsr_init
-                                    723 ;	main.c: 169: while (cnt++ < delay) {}
+                                    723 ;	main.c: 168: while (cnt++ < DELAY) {}
       000266                        724 00101$:
       000266r9Br0F                  725 	mov	a, _main_sloc21_1_0+1
       000268r80r0B                  726 	mov	p, a
@@ -734,13 +734,13 @@
       000278 40 18                  734 	t0sn.io	f, c
       00027Ar66r32                  735 	goto	00101$
       00027C                        736 00121$:
-                                    737 ;	main.c: 170: cnt = 0;        
+                                    737 ;	main.c: 169: cnt = 0;        
       00027Cr1Ar13                  738 	clear	_main_sloc21_1_0+0
       00027Er1Br13                  739 	clear	_main_sloc21_1_0+1
-                                    740 ;	main.c: 171: handle_tick();
+                                    740 ;	main.c: 170: handle_tick();
       000280rD0r39                  741 	call	_handle_tick
       000282r66r32                  742 	goto	00101$
-                                    743 ;	main.c: 181: }
+                                    743 ;	main.c: 173: }
       000284 7A 00                  744 	ret
                                     745 	.area CODE
                                     746 	.area CONST
